@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Domain.Vehicles;
 using GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Documents;
@@ -27,6 +28,15 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Repositories
 
             var document = VehicleDocument.FromDomain(vehicle);
             return _vehicles.InsertOneAsync(document);
+        }
+
+        public async Task<IReadOnlyCollection<Vehicle>> ListAvailable()
+        {
+            var documents = await _vehicles
+                .Find(document => document.Status == VehicleStatus.Available.ToString())
+                .ToListAsync();
+
+            return documents.ConvertAll(document => document.ToDomain());
         }
     }
 }

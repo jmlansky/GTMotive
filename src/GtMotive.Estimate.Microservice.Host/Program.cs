@@ -12,7 +12,6 @@ using GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Settings;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -129,6 +128,17 @@ if (!pathBase.IsDefault)
 
 app.UseForwardedHeaders();
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/")
+    {
+        context.Response.Redirect("swagger");
+        return;
+    }
+
+    await next(context);
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -138,8 +148,6 @@ app.UseSwaggerInApplication(pathBase, builder.Configuration);
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapGet("/", () => Results.Redirect("swagger"));
 
 app.MapControllers();
 

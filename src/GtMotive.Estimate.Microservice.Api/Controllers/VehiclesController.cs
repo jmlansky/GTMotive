@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Api.UseCases.CreateVehicle;
+using GtMotive.Estimate.Microservice.Api.UseCases.ListAvailableVehicles;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,10 @@ namespace GtMotive.Estimate.Microservice.Api.Controllers
         }
 
         [HttpGet("available")]
-        public IActionResult ListAvailableVehicles() => Ok();
+        public async Task<IActionResult> ListAvailableVehicles()
+        {
+            var presenter = await mediator.Send(new ListAvailableVehiclesRequest());
+            return presenter.ActionResult;
+        }
     }
 }

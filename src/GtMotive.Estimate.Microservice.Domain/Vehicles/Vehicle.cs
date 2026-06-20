@@ -98,5 +98,26 @@ namespace GtMotive.Estimate.Microservice.Domain.Vehicles
 
             return new Vehicle(id, brand, model, licensePlate, manufactureDate, VehicleStatus.Available);
         }
+
+        /// <summary>
+        /// Reconstitutes a vehicle from persistence without re-evaluating creation invariants.
+        /// </summary>
+        /// <param name="id">The vehicle identifier.</param>
+        /// <param name="brand">The vehicle brand.</param>
+        /// <param name="model">The vehicle model.</param>
+        /// <param name="licensePlate">The vehicle license plate.</param>
+        /// <param name="manufactureDate">The vehicle manufacture date.</param>
+        /// <param name="status">The vehicle status.</param>
+        /// <returns>The reconstituted <see cref="Vehicle"/>.</returns>
+        public static Vehicle Rehydrate(
+            VehicleId id,
+            string brand,
+            string model,
+            string licensePlate,
+            ManufactureDate manufactureDate,
+            VehicleStatus status)
+        {
+            return new Vehicle(id, brand, model, licensePlate, manufactureDate, status);
+        }
     }
 }

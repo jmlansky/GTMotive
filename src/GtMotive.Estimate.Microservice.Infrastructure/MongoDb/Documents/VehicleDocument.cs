@@ -31,5 +31,16 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Documents
                 Status = vehicle.Status.ToString(),
             };
         }
+
+        public Vehicle ToDomain()
+        {
+            return Vehicle.Rehydrate(
+                new VehicleId(Id),
+                Brand,
+                Model,
+                LicensePlate,
+                new ManufactureDate(ManufactureDate),
+                Enum.Parse<VehicleStatus>(Status));
+        }
     }
 }

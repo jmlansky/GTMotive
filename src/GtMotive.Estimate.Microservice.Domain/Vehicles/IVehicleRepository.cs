@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GtMotive.Estimate.Microservice.Domain.Vehicles
@@ -13,5 +14,11 @@ namespace GtMotive.Estimate.Microservice.Domain.Vehicles
         /// <param name="vehicle">The vehicle to add.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         Task Add(Vehicle vehicle);
+
+        /// <summary>
+        /// Lists the vehicles currently available to rent.
+        /// </summary>
+        /// <returns>The available vehicles.</returns>
+        Task<IReadOnlyCollection<Vehicle>> ListAvailable();
     }
 }
