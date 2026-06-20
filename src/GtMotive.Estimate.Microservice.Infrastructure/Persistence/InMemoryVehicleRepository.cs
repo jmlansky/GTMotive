@@ -28,5 +28,12 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.Persistence
 
             return Task.FromResult<IReadOnlyCollection<Vehicle>>(available);
         }
+
+        public Task<bool> ExistsByLicensePlate(string licensePlate)
+        {
+            var exists = _vehicles.Values.Any(vehicle => vehicle.LicensePlate == licensePlate);
+
+            return Task.FromResult(exists);
+        }
     }
 }

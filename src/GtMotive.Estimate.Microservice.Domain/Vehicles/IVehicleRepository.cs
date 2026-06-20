@@ -20,5 +20,12 @@ namespace GtMotive.Estimate.Microservice.Domain.Vehicles
         /// </summary>
         /// <returns>The available vehicles.</returns>
         Task<IReadOnlyCollection<Vehicle>> ListAvailable();
+
+        /// <summary>
+        /// Determines whether a vehicle with the given license plate already exists.
+        /// </summary>
+        /// <param name="licensePlate">The license plate to check.</param>
+        /// <returns><c>true</c> when a vehicle with that license plate already exists.</returns>
+        Task<bool> ExistsByLicensePlate(string licensePlate);
     }
 }

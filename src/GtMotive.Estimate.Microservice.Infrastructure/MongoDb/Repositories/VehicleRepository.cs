@@ -38,5 +38,12 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Repositories
 
             return documents.ConvertAll(document => document.ToDomain());
         }
+
+        public Task<bool> ExistsByLicensePlate(string licensePlate)
+        {
+            return _vehicles
+                .Find(document => document.LicensePlate == licensePlate)
+                .AnyAsync();
+        }
     }
 }

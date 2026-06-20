@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Domain.Interfaces;
 using GtMotive.Estimate.Microservice.Domain.Vehicles;
@@ -34,6 +34,12 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.CreateVehicle
         public async Task Execute(CreateVehicleInput input)
         {
             ArgumentNullException.ThrowIfNull(input);
+
+            if (await _vehicleRepository.ExistsByLicensePlate(input.LicensePlate))
+            {
+                _outputPort.LicensePlateAlreadyExistsHandle($"A vehicle with license plate '{input.LicensePlate}' already exists.");
+                return;
+            }
 
             var vehicle = Vehicle.RegisterForFleet(
                 VehicleId.New(),

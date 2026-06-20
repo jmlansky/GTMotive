@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace GtMotive.Estimate.Microservice.Domain.Vehicles
 {
@@ -63,13 +63,7 @@ namespace GtMotive.Estimate.Microservice.Domain.Vehicles
         /// <param name="manufactureDate">The vehicle manufacture date.</param>
         /// <param name="utcNow">The current UTC date used to evaluate the fleet age rule.</param>
         /// <returns>A new available <see cref="Vehicle"/>.</returns>
-        public static Vehicle RegisterForFleet(
-            VehicleId id,
-            string brand,
-            string model,
-            string licensePlate,
-            ManufactureDate manufactureDate,
-            DateTime utcNow)
+        public static Vehicle RegisterForFleet(VehicleId id, string brand, string model, string licensePlate, ManufactureDate manufactureDate, DateTime utcNow)
         {
             if (string.IsNullOrWhiteSpace(brand))
             {
