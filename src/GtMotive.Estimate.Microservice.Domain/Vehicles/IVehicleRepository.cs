@@ -16,6 +16,20 @@ namespace GtMotive.Estimate.Microservice.Domain.Vehicles
         Task Add(Vehicle vehicle);
 
         /// <summary>
+        /// Updates an existing vehicle in the fleet store.
+        /// </summary>
+        /// <param name="vehicle">The vehicle to update.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task Update(Vehicle vehicle);
+
+        /// <summary>
+        /// Gets a vehicle by its identifier.
+        /// </summary>
+        /// <param name="id">The vehicle identifier.</param>
+        /// <returns>The vehicle, or <c>null</c> when it does not exist.</returns>
+        Task<Vehicle> GetById(VehicleId id);
+
+        /// <summary>
         /// Lists the vehicles currently available to rent.
         /// </summary>
         /// <returns>The available vehicles.</returns>

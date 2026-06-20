@@ -30,6 +30,24 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Repositories
             return _vehicles.InsertOneAsync(document);
         }
 
+        public Task Update(Vehicle vehicle)
+        {
+            ArgumentNullException.ThrowIfNull(vehicle);
+
+            var document = VehicleDocument.FromDomain(vehicle);
+            return _vehicles.ReplaceOneAsync(stored => stored.Id == document.Id, document);
+        }
+
+        public async Task<Vehicle> GetById(VehicleId id)
+        {
+            var vehicleId = id.ToGuid();
+            var document = await _vehicles
+                .Find(stored => stored.Id == vehicleId)
+                .FirstOrDefaultAsync();
+
+            return document?.ToDomain();
+        }
+
         public async Task<IReadOnlyCollection<Vehicle>> ListAvailable()
         {
             var documents = await _vehicles

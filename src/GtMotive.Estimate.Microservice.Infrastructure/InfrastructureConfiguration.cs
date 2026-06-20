@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GtMotive.Estimate.Microservice.Domain.Interfaces;
+using GtMotive.Estimate.Microservice.Domain.Rentals;
 using GtMotive.Estimate.Microservice.Domain.Vehicles;
 using GtMotive.Estimate.Microservice.Infrastructure.Interfaces;
 using GtMotive.Estimate.Microservice.Infrastructure.Logging;
@@ -22,6 +23,7 @@ namespace GtMotive.Estimate.Microservice.Infrastructure
         {
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddSingleton<IVehicleRepository, InMemoryVehicleRepository>();
+            services.AddSingleton<IRentalRepository, InMemoryRentalRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
 

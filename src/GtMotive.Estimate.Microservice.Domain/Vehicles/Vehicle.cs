@@ -7,13 +7,7 @@ namespace GtMotive.Estimate.Microservice.Domain.Vehicles
     /// </summary>
     public sealed class Vehicle
     {
-        private Vehicle(
-            VehicleId id,
-            string brand,
-            string model,
-            string licensePlate,
-            ManufactureDate manufactureDate,
-            VehicleStatus status)
+        private Vehicle(VehicleId id, string brand, string model, string licensePlate, ManufactureDate manufactureDate, VehicleStatus status)
         {
             Id = id;
             Brand = brand;
@@ -51,7 +45,7 @@ namespace GtMotive.Estimate.Microservice.Domain.Vehicles
         /// <summary>
         /// Gets the vehicle availability status.
         /// </summary>
-        public VehicleStatus Status { get; }
+        public VehicleStatus Status { get; private set; }
 
         /// <summary>
         /// Registers a new vehicle for the fleet, enforcing the fleet invariants.
@@ -103,15 +97,22 @@ namespace GtMotive.Estimate.Microservice.Domain.Vehicles
         /// <param name="manufactureDate">The vehicle manufacture date.</param>
         /// <param name="status">The vehicle status.</param>
         /// <returns>The reconstituted <see cref="Vehicle"/>.</returns>
-        public static Vehicle Rehydrate(
-            VehicleId id,
-            string brand,
-            string model,
-            string licensePlate,
-            ManufactureDate manufactureDate,
-            VehicleStatus status)
+        public static Vehicle Rehydrate(VehicleId id, string brand, string model, string licensePlate, ManufactureDate manufactureDate, VehicleStatus status)
         {
             return new Vehicle(id, brand, model, licensePlate, manufactureDate, status);
+        }
+
+        /// <summary>
+        /// Marks the vehicle as rented.
+        /// </summary>
+        public void Rent()
+        {
+            if (Status != VehicleStatus.Available)
+            {
+                throw new DomainException("Only an available vehicle can be rented.");
+            }
+
+            Status = VehicleStatus.Rented;
         }
     }
 }

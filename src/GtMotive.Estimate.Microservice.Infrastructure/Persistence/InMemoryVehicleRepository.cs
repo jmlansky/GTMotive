@@ -15,9 +15,25 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.Persistence
         {
             ArgumentNullException.ThrowIfNull(vehicle);
 
+            _ = _vehicles.TryAdd(vehicle.Id.ToGuid(), vehicle);
+
+            return Task.CompletedTask;
+        }
+
+        public Task Update(Vehicle vehicle)
+        {
+            ArgumentNullException.ThrowIfNull(vehicle);
+
             _vehicles[vehicle.Id.ToGuid()] = vehicle;
 
             return Task.CompletedTask;
+        }
+
+        public Task<Vehicle> GetById(VehicleId id)
+        {
+            _vehicles.TryGetValue(id.ToGuid(), out var vehicle);
+
+            return Task.FromResult(vehicle);
         }
 
         public Task<IReadOnlyCollection<Vehicle>> ListAvailable()
