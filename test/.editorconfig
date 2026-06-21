@@ -1,0 +1,4 @@
+# Test projects expose public fixtures/base classes that xUnit requires to be public
+# (xUnit1000). CA1515 ("types can be made internal") does not apply to test infrastructure.
+[*.cs]
+dotnet_diagnostic.CA1515.severity = none
