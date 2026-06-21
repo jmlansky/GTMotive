@@ -11,11 +11,13 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.ReturnVehicle
     /// <param name="vehicleId">The returned vehicle identifier.</param>
     /// <param name="rentalId">The closed rental identifier.</param>
     /// <param name="endedAtUtc">The moment the rental was closed, in UTC.</param>
+    /// <param name="actualDays">The actual rental duration in whole days.</param>
     /// <param name="vehicleStatus">The resulting vehicle status.</param>
     public sealed class ReturnVehicleOutput(
         Guid vehicleId,
         Guid rentalId,
         DateTime endedAtUtc,
+        int? actualDays,
         string vehicleStatus) : IUseCaseOutput
     {
         /// <summary>
@@ -32,6 +34,11 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.ReturnVehicle
         /// Gets the moment the rental was closed, in UTC.
         /// </summary>
         public DateTime EndedAtUtc { get; } = endedAtUtc;
+
+        /// <summary>
+        /// Gets the actual rental duration in whole days.
+        /// </summary>
+        public int? ActualDays { get; } = actualDays;
 
         /// <summary>
         /// Gets the resulting vehicle status.

@@ -16,7 +16,7 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.ReturnVehicle
         {
             ArgumentNullException.ThrowIfNull(request);
 
-            await _useCase.Execute(new ReturnVehicleInput(new VehicleId(request.VehicleId)));
+            await _useCase.Execute(new ReturnVehicleInput(new VehicleId(request.VehicleId), request.ReturnedAtUtc));
 
             return _presenter;
         }

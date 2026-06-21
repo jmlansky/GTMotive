@@ -53,7 +53,7 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.ReturnVehicle
                 return;
             }
 
-            var endedAtUtc = _dateTimeProvider.UtcNow;
+            var endedAtUtc = input.ReturnedAtUtc ?? _dateTimeProvider.UtcNow;
             rental.Close(endedAtUtc);
             vehicle.Return();
 
@@ -65,6 +65,7 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.ReturnVehicle
                 vehicle.Id.ToGuid(),
                 rental.Id.ToGuid(),
                 endedAtUtc,
+                rental.ActualDays,
                 vehicle.Status.ToString());
 
             _outputPort.StandardHandle(output);

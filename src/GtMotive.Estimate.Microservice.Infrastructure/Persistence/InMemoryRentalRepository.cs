@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Domain.Rentals;
@@ -43,6 +44,11 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.Persistence
             var exists = _rentals.Values.Any(rental => rental.IsActive && rental.CustomerId.ToGuid() == customerGuid);
 
             return Task.FromResult(exists);
+        }
+
+        public Task<IReadOnlyCollection<Rental>> ListAll()
+        {
+            return Task.FromResult<IReadOnlyCollection<Rental>>([.. _rentals.Values]);
         }
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Domain.Interfaces;
 using GtMotive.Estimate.Microservice.Domain.Rentals;
@@ -60,7 +60,7 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.RentVehicle
 
             vehicle.Rent();
 
-            var rental = Rental.Start(RentalId.New(), input.VehicleId, input.CustomerId, _dateTimeProvider.UtcNow);
+            var rental = Rental.Start(RentalId.New(), input.VehicleId, input.CustomerId, _dateTimeProvider.UtcNow, input.DueDateUtc);
 
             await _rentalRepository.Add(rental);
             await _vehicleRepository.Update(vehicle);
@@ -71,6 +71,8 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.RentVehicle
                 vehicle.Id.ToGuid(),
                 rental.CustomerId.ToGuid(),
                 rental.StartedAtUtc,
+                rental.DueDateUtc,
+                rental.PlannedDays,
                 vehicle.Status.ToString());
 
             _outputPort.StandardHandle(output);

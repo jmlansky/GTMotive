@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using GtMotive.Estimate.Microservice.Api.UseCases.ListRentals;
 using GtMotive.Estimate.Microservice.Api.UseCases.RentVehicle;
 using GtMotive.Estimate.Microservice.Api.UseCases.ReturnVehicle;
 using MediatR;
@@ -11,6 +12,13 @@ namespace GtMotive.Estimate.Microservice.Api.Controllers
     [Route("api/rentals")]
     public sealed class RentalsController(IMediator mediator) : ControllerBase
     {
+        [HttpGet]
+        public async Task<IActionResult> ListRentals()
+        {
+            var presenter = await mediator.Send(new ListRentalsRequest());
+            return presenter.ActionResult;
+        }
+
         [HttpPost]
         public async Task<IActionResult> RentVehicle([FromBody][Required] RentVehicleRequest request)
         {

@@ -1,3 +1,4 @@
+using System;
 using GtMotive.Estimate.Microservice.Domain.Rentals;
 using GtMotive.Estimate.Microservice.Domain.Vehicles;
 
@@ -11,7 +12,8 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.RentVehicle
     /// </remarks>
     /// <param name="vehicleId">The vehicle to rent.</param>
     /// <param name="customerId">The customer renting the vehicle.</param>
-    public sealed class RentVehicleInput(VehicleId vehicleId, CustomerId customerId) : IUseCaseInput
+    /// <param name="dueDateUtc">The planned return date, in UTC.</param>
+    public sealed class RentVehicleInput(VehicleId vehicleId, CustomerId customerId, DateTime dueDateUtc) : IUseCaseInput
     {
         /// <summary>
         /// Gets the vehicle identifier.
@@ -22,5 +24,10 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.RentVehicle
         /// Gets the customer identifier.
         /// </summary>
         public CustomerId CustomerId { get; } = customerId;
+
+        /// <summary>
+        /// Gets the planned return date, in UTC.
+        /// </summary>
+        public DateTime DueDateUtc { get; } = dueDateUtc;
     }
 }

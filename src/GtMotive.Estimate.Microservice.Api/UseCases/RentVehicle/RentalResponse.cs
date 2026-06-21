@@ -21,6 +21,8 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.RentVehicle
             VehicleId = output.VehicleId;
             CustomerId = output.CustomerId;
             StartedAtUtc = output.StartedAtUtc;
+            DueDateUtc = output.DueDateUtc;
+            PlannedDays = output.PlannedDays;
             VehicleStatus = output.VehicleStatus;
         }
 
@@ -47,6 +49,18 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.RentVehicle
         /// </summary>
         [Required]
         public DateTime StartedAtUtc { get; }
+
+        /// <summary>
+        /// Gets the planned return date, in UTC.
+        /// </summary>
+        [Required]
+        public DateTime DueDateUtc { get; }
+
+        /// <summary>
+        /// Gets the planned rental duration in whole days.
+        /// </summary>
+        [Required]
+        public int PlannedDays { get; }
 
         /// <summary>
         /// Gets the resulting vehicle status.

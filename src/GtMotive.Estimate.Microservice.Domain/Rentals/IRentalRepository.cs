@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Domain.Vehicles;
 
@@ -35,5 +36,11 @@ namespace GtMotive.Estimate.Microservice.Domain.Rentals
         /// <param name="customerId">The customer identifier.</param>
         /// <returns><c>true</c> when the customer has an open rental.</returns>
         Task<bool> ExistsActiveByCustomer(CustomerId customerId);
+
+        /// <summary>
+        /// Lists every rental, both open and closed.
+        /// </summary>
+        /// <returns>All rentals.</returns>
+        Task<IReadOnlyCollection<Rental>> ListAll();
     }
 }

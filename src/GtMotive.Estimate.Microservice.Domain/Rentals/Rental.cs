@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using GtMotive.Estimate.Microservice.Domain.Vehicles;
 
 namespace GtMotive.Estimate.Microservice.Domain.Rentals
@@ -13,12 +13,14 @@ namespace GtMotive.Estimate.Microservice.Domain.Rentals
             VehicleId vehicleId,
             CustomerId customerId,
             DateTime startedAtUtc,
+            DateTime dueDateUtc,
             DateTime? endedAtUtc)
         {
             Id = id;
             VehicleId = vehicleId;
             CustomerId = customerId;
             StartedAtUtc = startedAtUtc;
+            DueDateUtc = dueDateUtc;
             EndedAtUtc = endedAtUtc;
         }
 
@@ -43,6 +45,11 @@ namespace GtMotive.Estimate.Microservice.Domain.Rentals
         public DateTime StartedAtUtc { get; }
 
         /// <summary>
+        /// Gets the planned return date, in UTC.
+        /// </summary>
+        public DateTime DueDateUtc { get; }
+
+        /// <summary>
         /// Gets the moment the rental ended, in UTC, or <c>null</c> when it is still open.
         /// </summary>
         public DateTime? EndedAtUtc { get; private set; }
@@ -53,16 +60,43 @@ namespace GtMotive.Estimate.Microservice.Domain.Rentals
         public bool IsActive => EndedAtUtc is null;
 
         /// <summary>
+        /// Gets the planned rental duration in whole days (rounded half-up) from start to the due date.
+        /// </summary>
+        public int PlannedDays => RoundDays(DueDateUtc - StartedAtUtc);
+
+        /// <summary>
+        /// Gets the actual rental duration in whole days (rounded half-up), or <c>null</c> while still open.
+        /// </summary>
+        public int? ActualDays
+        {
+            get
+            {
+                if (EndedAtUtc is { } endedAtUtc)
+                {
+                    return RoundDays(endedAtUtc - StartedAtUtc);
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Starts a new open rental.
         /// </summary>
         /// <param name="id">The rental identifier.</param>
         /// <param name="vehicleId">The rented vehicle identifier.</param>
         /// <param name="customerId">The renting customer identifier.</param>
         /// <param name="startedAtUtc">The moment the rental starts, in UTC.</param>
+        /// <param name="dueDateUtc">The planned return date, in UTC.</param>
         /// <returns>A new open <see cref="Rental"/>.</returns>
-        public static Rental Start(RentalId id, VehicleId vehicleId, CustomerId customerId, DateTime startedAtUtc)
+        public static Rental Start(RentalId id, VehicleId vehicleId, CustomerId customerId, DateTime startedAtUtc, DateTime dueDateUtc)
         {
-            return new Rental(id, vehicleId, customerId, startedAtUtc, null);
+            if (dueDateUtc <= startedAtUtc)
+            {
+                throw new DomainException("The planned return date must be after the rental start.");
+            }
+
+            return new Rental(id, vehicleId, customerId, startedAtUtc, dueDateUtc, null);
         }
 
         /// <summary>
@@ -76,7 +110,17 @@ namespace GtMotive.Estimate.Microservice.Domain.Rentals
                 throw new DomainException("The rental is already closed.");
             }
 
+            if (endedAtUtc < StartedAtUtc)
+            {
+                throw new DomainException("The return date cannot be before the rental start.");
+            }
+
             EndedAtUtc = endedAtUtc;
+        }
+
+        private static int RoundDays(TimeSpan span)
+        {
+            return (int)Math.Round(span.TotalDays, MidpointRounding.AwayFromZero);
         }
     }
 }

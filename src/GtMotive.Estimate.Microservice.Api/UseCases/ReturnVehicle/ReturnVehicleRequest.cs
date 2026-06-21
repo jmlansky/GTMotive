@@ -16,5 +16,10 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.ReturnVehicle
         [Required]
         [JsonRequired]
         public Guid VehicleId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the return date, in UTC. When omitted, the vehicle is returned now.
+        /// </summary>
+        public DateTime? ReturnedAtUtc { get; set; }
     }
 }

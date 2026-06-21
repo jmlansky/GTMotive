@@ -12,12 +12,16 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.RentVehicle
     /// <param name="vehicleId">The rented vehicle identifier.</param>
     /// <param name="customerId">The renting customer identifier.</param>
     /// <param name="startedAtUtc">The moment the rental started, in UTC.</param>
+    /// <param name="dueDateUtc">The planned return date, in UTC.</param>
+    /// <param name="plannedDays">The planned rental duration in whole days.</param>
     /// <param name="vehicleStatus">The resulting vehicle status.</param>
     public sealed class RentVehicleOutput(
         Guid rentalId,
         Guid vehicleId,
         Guid customerId,
         DateTime startedAtUtc,
+        DateTime dueDateUtc,
+        int plannedDays,
         string vehicleStatus) : IUseCaseOutput
     {
         /// <summary>
@@ -39,6 +43,16 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.RentVehicle
         /// Gets the moment the rental started, in UTC.
         /// </summary>
         public DateTime StartedAtUtc { get; } = startedAtUtc;
+
+        /// <summary>
+        /// Gets the planned return date, in UTC.
+        /// </summary>
+        public DateTime DueDateUtc { get; } = dueDateUtc;
+
+        /// <summary>
+        /// Gets the planned rental duration in whole days.
+        /// </summary>
+        public int PlannedDays { get; } = plannedDays;
 
         /// <summary>
         /// Gets the resulting vehicle status.

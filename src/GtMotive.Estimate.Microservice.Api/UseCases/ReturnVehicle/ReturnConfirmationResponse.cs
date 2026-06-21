@@ -20,6 +20,7 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.ReturnVehicle
             VehicleId = output.VehicleId;
             RentalId = output.RentalId;
             EndedAtUtc = output.EndedAtUtc;
+            ActualDays = output.ActualDays;
             VehicleStatus = output.VehicleStatus;
         }
 
@@ -40,6 +41,11 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.ReturnVehicle
         /// </summary>
         [Required]
         public DateTime EndedAtUtc { get; }
+
+        /// <summary>
+        /// Gets the actual rental duration in whole days.
+        /// </summary>
+        public int? ActualDays { get; }
 
         /// <summary>
         /// Gets the resulting vehicle status.

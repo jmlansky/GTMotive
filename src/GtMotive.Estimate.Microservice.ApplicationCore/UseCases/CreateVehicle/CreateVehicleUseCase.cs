@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Domain.Interfaces;
 using GtMotive.Estimate.Microservice.Domain.Vehicles;
@@ -15,11 +15,7 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.CreateVehicle
     /// <param name="vehicleRepository">The vehicle repository.</param>
     /// <param name="unitOfWork">The unit of work.</param>
     /// <param name="dateTimeProvider">The date time provider.</param>
-    public sealed class CreateVehicleUseCase(
-        ICreateVehicleOutputPort outputPort,
-        IVehicleRepository vehicleRepository,
-        IUnitOfWork unitOfWork,
-        IDateTimeProvider dateTimeProvider) : ICreateVehicleUseCase
+    public sealed class CreateVehicleUseCase(ICreateVehicleOutputPort outputPort, IVehicleRepository vehicleRepository, IUnitOfWork unitOfWork, IDateTimeProvider dateTimeProvider) : ICreateVehicleUseCase
     {
         private readonly ICreateVehicleOutputPort _outputPort = outputPort;
         private readonly IVehicleRepository _vehicleRepository = vehicleRepository;

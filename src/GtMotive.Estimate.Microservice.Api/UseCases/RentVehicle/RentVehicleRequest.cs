@@ -23,5 +23,12 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.RentVehicle
         [Required]
         [JsonRequired]
         public Guid CustomerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the planned return date, in UTC.
+        /// </summary>
+        [Required]
+        [JsonRequired]
+        public DateTime DueDateUtc { get; set; }
     }
 }
