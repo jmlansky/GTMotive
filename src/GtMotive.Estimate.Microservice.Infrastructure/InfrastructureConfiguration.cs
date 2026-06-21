@@ -1,8 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GtMotive.Estimate.Microservice.Domain.Interfaces;
-using GtMotive.Estimate.Microservice.Domain.Rentals;
-using GtMotive.Estimate.Microservice.Domain.Vehicles;
 using GtMotive.Estimate.Microservice.Infrastructure.Interfaces;
 using GtMotive.Estimate.Microservice.Infrastructure.Logging;
 using GtMotive.Estimate.Microservice.Infrastructure.Persistence;
@@ -22,9 +20,11 @@ namespace GtMotive.Estimate.Microservice.Infrastructure
             bool isDevelopment)
         {
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-            services.AddSingleton<IVehicleRepository, InMemoryVehicleRepository>();
-            services.AddSingleton<IRentalRepository, InMemoryRentalRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Storage engine selection lives in one place. Swap AddInMemoryPersistence for a future
+            // AddMongoPersistence to move to MongoDB without touching the rest of the application.
+            services.AddInMemoryPersistence();
+
             services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
 
             if (isDevelopment)

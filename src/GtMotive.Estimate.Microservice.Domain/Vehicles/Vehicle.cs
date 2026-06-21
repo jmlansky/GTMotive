@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace GtMotive.Estimate.Microservice.Domain.Vehicles
 {
@@ -113,6 +113,19 @@ namespace GtMotive.Estimate.Microservice.Domain.Vehicles
             }
 
             Status = VehicleStatus.Rented;
+        }
+
+        /// <summary>
+        /// Marks the vehicle as available again after a return.
+        /// </summary>
+        public void Return()
+        {
+            if (Status != VehicleStatus.Rented)
+            {
+                throw new DomainException("Only a rented vehicle can be returned.");
+            }
+
+            Status = VehicleStatus.Available;
         }
     }
 }

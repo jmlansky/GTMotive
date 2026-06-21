@@ -66,20 +66,6 @@ namespace GtMotive.Estimate.Microservice.Domain.Rentals
         }
 
         /// <summary>
-        /// Reconstitutes a rental from persistence.
-        /// </summary>
-        /// <param name="id">The rental identifier.</param>
-        /// <param name="vehicleId">The rented vehicle identifier.</param>
-        /// <param name="customerId">The renting customer identifier.</param>
-        /// <param name="startedAtUtc">The moment the rental started, in UTC.</param>
-        /// <param name="endedAtUtc">The moment the rental ended, in UTC, or <c>null</c> when open.</param>
-        /// <returns>The reconstituted <see cref="Rental"/>.</returns>
-        public static Rental Rehydrate(RentalId id, VehicleId vehicleId, CustomerId customerId, DateTime startedAtUtc, DateTime? endedAtUtc)
-        {
-            return new Rental(id, vehicleId, customerId, startedAtUtc, endedAtUtc);
-        }
-
-        /// <summary>
         /// Closes the rental.
         /// </summary>
         /// <param name="endedAtUtc">The moment the rental ends, in UTC.</param>

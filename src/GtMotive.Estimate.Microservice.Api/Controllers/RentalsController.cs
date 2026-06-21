@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Api.UseCases.RentVehicle;
+using GtMotive.Estimate.Microservice.Api.UseCases.ReturnVehicle;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,10 @@ namespace GtMotive.Estimate.Microservice.Api.Controllers
         }
 
         [HttpPost("return")]
-        public IActionResult ReturnVehicle() => Ok();
+        public async Task<IActionResult> ReturnVehicle([FromBody][Required] ReturnVehicleRequest request)
+        {
+            var presenter = await mediator.Send(request);
+            return presenter.ActionResult;
+        }
     }
 }
