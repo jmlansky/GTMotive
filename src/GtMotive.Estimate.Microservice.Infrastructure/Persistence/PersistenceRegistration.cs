@@ -7,8 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace GtMotive.Estimate.Microservice.Infrastructure.Persistence
 {
     /// <summary>
-    /// Single place where the storage engine is selected. Switching the in-memory store for MongoDB
-    /// later only requires adding an equivalent AddMongoPersistence method (registering the Mongo
+    /// Single place where the storage engine is selected. Switching the in-memory store for a
+    /// database-backed one later only requires adding an equivalent registration method (the new
     /// repositories behind the same ports) and changing the single call in InfrastructureConfiguration.
     /// </summary>
     [ExcludeFromCodeCoverage]

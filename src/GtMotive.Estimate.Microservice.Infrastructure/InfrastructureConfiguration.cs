@@ -21,8 +21,8 @@ namespace GtMotive.Estimate.Microservice.Infrastructure
         {
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
-            // Storage engine selection lives in one place. Swap AddInMemoryPersistence for a future
-            // AddMongoPersistence to move to MongoDB without touching the rest of the application.
+            // Storage engine selection lives in one place. Swap AddInMemoryPersistence for a
+            // database-backed registration to change the engine without touching the rest of the application.
             services.AddInMemoryPersistence();
 
             services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();

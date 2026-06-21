@@ -16,7 +16,6 @@
         <PackageReference Update="AspNetCore.HealthChecks.Redis" Version="3.0.0" />
         <PackageReference Update="AspNetCore.HealthChecks.SqlServer" Version="3.0.0" />
         <PackageReference Update="AspNetCore.HealthChecks.AzureServiceBus" Version="3.2.2" />
-        <PackageReference Update="AspNetCore.HealthChecks.MongoDb" Version="6.0.2" />
 
         <!-- Microsoft Extensions -->
         <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="9.0.0" />
@@ -70,8 +69,6 @@
         <PackageReference Update="IdentityModel.AspNetCore" Version="4.3.0" />
 
         <!-- Cosmos DB -->
-        <PackageReference Update="MongoDB.Bson" Version="3.2.1" />
-        <PackageReference Update="MongoDB.Driver" Version="3.2.1" />
         <PackageReference Update="Microsoft.Azure.Cosmos" Version="3.16.0" />
 
         <!-- misc -->
