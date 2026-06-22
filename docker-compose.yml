@@ -1,0 +1,15 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gtmotive-estimate-api
+    container_name: gtmotive-estimate-api
+    ports:
+      - "8080:8080"
+    environment:
+      # Development keeps Swagger on and avoids external configuration.
+      # Change to Production (and provide the matching settings) for a real deployment.
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+    restart: unless-stopped

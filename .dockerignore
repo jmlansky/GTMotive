@@ -1,0 +1,10 @@
+# Build artifacts and IDE/VCS folders are not needed in the build context.
+**/bin
+**/obj
+**/.vs
+**/*.user
+.git
+.github
+
+# The test projects are not required to build or run the service.
+test

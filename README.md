@@ -1,4 +1,53 @@
 # Sample Implementation of Hexagonal Architecture in a Microservice
+
+## How to run
+
+This is a self-contained **.NET 9** Web API. It uses **in-memory storage**, so there is **no external dependency** to install or start — no database and no container are required to run it.
+
+**Prerequisites:** the .NET 9 SDK.
+
+**Option A — Visual Studio:** set `GtMotive.Estimate.Microservice.Host` as the **startup project** and run it (F5). It listens on **`https://localhost:53380`** (and `http://localhost:53381`). The browser opens Swagger automatically, and the root `/` redirects to `/swagger`.
+
+**Option B — command line:**
+
+```bash
+dotnet run --project src/GtMotive.Estimate.Microservice.Host
+```
+
+Then open the interactive API docs at **`https://localhost:53380/swagger`** (or `http://localhost:53381/swagger` to skip the HTTPS dev certificate). To force a custom port, set `ASPNETCORE_URLS`, e.g. `ASPNETCORE_URLS=http://localhost:5080`.
+
+**Available endpoints** (also browsable from Swagger):
+
+| Method | Route | Use case |
+|--------|-------|----------|
+| `POST` | `/api/vehicles` | Create a vehicle |
+| `GET`  | `/api/vehicles/available` | List available vehicles |
+| `POST` | `/api/rentals` | Rent a vehicle |
+| `POST` | `/api/rentals/return` | Return a vehicle |
+| `GET`  | `/api/rentals` | List rentals (active and closed) |
+
+**Run the tests:**
+
+```bash
+dotnet test src/microservice.sln
+```
+
+> Storage is in-memory: data lives while the host is running and resets when it stops.
+
+### Run with Docker (unattended)
+
+The whole service ships as a **single container**, with no database or extra services to start. With Docker installed, from the repository root:
+
+```bash
+docker compose up --build
+```
+
+The API is then available on **`http://localhost:8080`** — Swagger at `http://localhost:8080/swagger`, and the root `/` redirects there. Stop and remove everything with `docker compose down`.
+
+The container runs in the `Development` environment, so Swagger is enabled and no external configuration (Key Vault, Application Insights) is required. To deploy elsewhere, change `ASPNETCORE_ENVIRONMENT` (and provide the matching settings) in `docker-compose.yml`.
+
+Because persistence is in-memory, data resets every time the container restarts. When a real database is introduced later, it becomes a **second service** in the same `docker-compose.yml` (with `depends_on` and a connection string), and `docker compose up` stays the single command.
+
 ## Index
 ### [Introduction](#introduction)
 ### [Clean Architecture](#clean-architecture)
